@@ -1,0 +1,27 @@
+/*******************************************************************************
+   Name   : styles.css
+   Purpose: INFO154 - Lab1 c
+   Author : Jeremy Patrick
+   Date   : July 6, 2013
+*******************************************************************************/
+
+
+/*******************************************************************************
+ * MAIN BODY
+ ******************************************************************************/
+    body{
+        font-family: arial, sans-serif;
+    }
+    h1 {
+        font-size: 96pt;
+        color: #FFFFFF;
+        background-color: #999999;
+        margin-top: 0px;
+        /*margin-bottom: 20px;*/
+    }
+    form{
+        margin-left: 60px;
+        padding: 30px 10px;
+        /*background-color: #F7F7F7;*/
+        display: inline;
+    }
