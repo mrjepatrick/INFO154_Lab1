@@ -32,57 +32,55 @@ function checkB() {
 	// 2nd test, with comma, a string with comma immediately
 	// fail the test if it contain non numeric char
 			else {
-						var lstReplace = originalString.replace(/\,/g,'');
-						if (isNaN(lstReplace) == true )
-							{
-								alert (originalString+' is not a number');
-							}
-						else {
+				var lstReplace = originalString.replace(/\,/g,'');
+				if (isNaN(lstReplace) == true ){
+				alert (originalString+' is not a number');
+				}
+				else {
 	//	before come to next test, we need to remove all the numbers
 	//  after "." , also fail the string that contain the 1st "," at 5th or higher
-						var shortString;
-						if (originalString.indexOf(".")  > -1 ){
-							shortString = originalString.substring(0, originalString.indexOf("."));
-						}
-						else{
-							shortString = originalString;
-							}
-						if (originalString.indexOf(".")  > -1 && originalString.indexOf(".") <originalString.indexOf(",")){
-							alert(originalString+' is not a valid number');
-							return false;
-							}
-						if(originalString.indexOf(",") >=4 ){
-							alert(originalString +' is not a valid number');
-							return false;
-							}
+				var shortString;
+				if (originalString.indexOf(".")  > -1 ){
+					shortString = originalString.substring(0, originalString.indexOf("."));
+				}
+				else{
+					shortString = originalString;
+				}
+				if (originalString.indexOf(".")  > -1 && originalString.indexOf(".") <originalString.indexOf(",")){
+					alert(originalString+' is not a valid number');
+					return false;
+				}
+				if(originalString.indexOf(",") >=4 ){
+					alert(originalString +' is not a valid number');
+					return false;
+				}
 
 	// 3rd test, reserver all the number, find out if
 	// comma placed at 4th,7th,10th... respectively or not
-						var flip = "";
-						for (var i=shortString.length-1; i>=0; i--){
-							flip += shortString[i];
-							}
-						var index = [];
-						var list = [4,8,12,16,20,24] //can be a loop of i=4, i< shortString.length, i+4;
-						for ( i=0; i< flip.length; i++)
-							{
-							if (flip[i] === ",") index.push(i+1);
-							}
-						
+				var flip = "";
+				for (var i=shortString.length-1; i>=0; i--){
+					flip += shortString[i];
+				}
+				var index = [];
+				var list = [4,8,12,16,20,24] //can be a loop of i=4, i< shortString.length, i+4;
+				for ( i=0; i< flip.length; i++){
+					if (flip[i] === ",") 
+					index.push(i+1);
+				}	
 	///////////////////////////////////////////
 	///////////////////////////////////////////
-						var valid = true;
+				var valid = true;
 						
-						for ( i=0; i < index.length; i++){
-							if (index[i] != list[i] || index[i] === flip.length){
-								valid = false;
-								break;}
-								}
+				for ( i=0; i < index.length; i++){
+				if (index[i] != list[i] || index[i] === flip.length){
+					valid = false;
+					break;}
+				}
 
-						if ( valid === false){
-							alert (originalString+' is not a valid number');}
-						else{
-							alert (originalString+' is a valid number');}
+				if ( valid === false){
+					alert (originalString+' is not a valid number');}
+				else{
+					alert (originalString+' is a valid number');}
 				}
 	return false;
 }}}
