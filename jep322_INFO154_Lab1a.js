@@ -18,7 +18,7 @@
             alert('Please make an entry for validation');
             return false;
         } else {
-            var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var alphabet = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             var validChar = false;
 
             for(var x=0; x<(document.alphaForm.keyword.value).length; ++x ){
