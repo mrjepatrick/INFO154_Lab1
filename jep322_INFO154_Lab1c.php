@@ -19,7 +19,6 @@
     <!-- Includes script to validate numeric entries -->
     <script type="text/javascript" src="Lab1b.js"></script>
     
-    
     <body>
         
     <!--/////////////////////////////////////////////////////////////////////
