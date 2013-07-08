@@ -17,6 +17,7 @@
     <script type="text/javascript" src="jep322_INFO154_Lab1a.js"></script>
     
     <!-- Includes script to validate numeric entries -->
+    <script type="text/javascript" src="Lab1b.js"></script>
     
     
     <body>
@@ -41,8 +42,10 @@
     <!--/////////////////////////////////////////////////////////////////////
         // NUMERIC VALIDATION FORM
         /////////////////////////////////////////////////////////////////////-->
-            
-            
+            <form action="index.php" method="POST" name="bForm" onsubmit="return checkB();" >
+                <em>Validate Numeric</em> <input type="text" name="number" size="25" maxlength="25" value="" />
+                <input type="submit" name="validateB" value="Validate" />
+             </form>
             
     </body>
 </html>
