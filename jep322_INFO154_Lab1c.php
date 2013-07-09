@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Lab1 - Validation Scripts</title>
+        <title>Lab1 - Alpha Numeric Validation Scripts</title>
         <link rel="stylesheet" type="text/css" href="jep322_INFO154_Lab1c_styles.css">
     </head>
     
@@ -24,7 +24,7 @@
     <!--/////////////////////////////////////////////////////////////////////
         // MAIN HEADER
         /////////////////////////////////////////////////////////////////////-->
-            <h1>Lab1 Validation</h1>
+            <h1>Lab1 Alpha Numeric Validation</h1>
         
     <!--/////////////////////////////////////////////////////////////////////
         // ALPHABETIC VALIDATION FORM
