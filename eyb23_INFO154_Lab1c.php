@@ -1,8 +1,8 @@
 <!--============================================================================
-   Name   : index.php
-   Purpose: INFO154 - Lab1 c
-   Author : 
-   Date   : 
+   Name   : eyb23_INFO154_Lab1c.php
+   Purpose: INFO154 - Lab1 - Part c
+   Author : Edward Budihardjo
+   Date   : July 7, 2013
  ============================================================================-->
 
 <!DOCTYPE html>
@@ -24,12 +24,12 @@
     <!--/////////////////////////////////////////////////////////////////////
         // MAIN HEADER
         /////////////////////////////////////////////////////////////////////-->
-            <h1>Lab1 Alpha Numeric Validation</h1>
+            <h1>Lab1 Validation</h1>
         
     <!--/////////////////////////////////////////////////////////////////////
         // ALPHABETIC VALIDATION FORM
         /////////////////////////////////////////////////////////////////////-->
-            <form action="jep322_INFO154_Lab1c.php" method="POST" name="alphaForm" onsubmit="return checkAlpha();" >
+            <form action="eyb23_INFO154_Lab1c.php" method="POST" name="alphaForm" onsubmit="return checkAlpha();" >
                 <em>Validate alphabetic</em> <input type="text" name="keyword" size="25" maxlength="25" value="" />
                 <input type="submit" name="validateAlpha" value="Validate" />
             </form>
@@ -41,7 +41,7 @@
     <!--/////////////////////////////////////////////////////////////////////
         // NUMERIC VALIDATION FORM
         /////////////////////////////////////////////////////////////////////-->
-            <form action="jep322_INFO154_Lab1c.php" method="POST" name="bForm" onsubmit="return checkB();" >
+            <form action="eyb23_INFO154_Lab1c.php" method="POST" name="bForm" onsubmit="return checkB();" >
                 <em>Validate Numeric</em> <input type="text" name="number" size="25" maxlength="25" value="" />
                 <input type="submit" name="validateB" value="Validate" />
              </form>
