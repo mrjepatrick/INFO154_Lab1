@@ -34,7 +34,7 @@
                     validChar = false;
                 } else {
                     // False means not found, so fail out
-                    alert('"'+document.alphaForm.keyword.value[x]+'" is not an alphabetic character.');
+                    alert('"'+document.alphaForm.keyword.value+'" is not an alphabetic entry.');
                     return false;
                 }
             }
