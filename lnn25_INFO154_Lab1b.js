@@ -63,7 +63,8 @@
                             index.push(i+1);
                     }
             ///////////////////////////////////////////
-            ///////////////////////////////////////////
+            //check where the comma place correctly or not
+            // the comma need to be at 4th, 8th... possition
                     var valid = true;
 
                     for ( i=0; i < index.length; i++){
