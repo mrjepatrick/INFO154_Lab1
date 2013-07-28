@@ -1,3 +1,10 @@
+<!--============================================================================
+   Name   : index.php
+   Purpose: INFO154 - Lab2
+   Author : Jeremy Patrick
+   Date   : July 27, 2013
+ ============================================================================-->
+
 <?php
 ini_set('display_errors', 1);
 require_once('TwitterAPIExchange.php');
