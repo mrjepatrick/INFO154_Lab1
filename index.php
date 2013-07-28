@@ -20,27 +20,27 @@ $requestMethod = 'POST';
 /*******************************************************************************
  * Perform a POST request and echo the response
  ******************************************************************************/
-//    $postfields = array(
-//        'screen_name' => 'usernameToBlock', 
-//        'skip_status' => '1'
-//    );
-//
-//    $twitter = new TwitterAPIExchange($settings);
-//    echo $twitter->buildOauth($url, $requestMethod)
-//                 ->setPostfields($postfields)
-//                 ->performRequest();
+    $postfields = array(
+        'screen_name' => 'usernameToBlock', 
+        'skip_status' => '1'
+    );
+
+    $twitter = new TwitterAPIExchange($settings);
+    echo $twitter->buildOauth($url, $requestMethod)
+                 ->setPostfields($postfields)
+                 ->performRequest();
 
 
 /*******************************************************************************
  *  Perform a GET request and echo the response
  ******************************************************************************/
     /** Note: Set the GET field BEFORE calling buildOauth(); **/
-    $url = 'https://api.twitter.com/1.1/followers/ids.json';
-    $getfield = '?q=corgi&near=Philadelphia&within=15mi';
-
-    $requestMethod = 'GET';
-    $twitter = new TwitterAPIExchange($settings);
-    echo $twitter->setGetfield($getfield)
-                 ->buildOauth($url, $requestMethod)
-                 ->performRequest();
+//    $url = 'https://api.twitter.com/1.1/followers/ids.json';
+//    $getfield = '?q=corgi&near=Philadelphia&within=15mi';
+//
+//    $requestMethod = 'GET';
+//    $twitter = new TwitterAPIExchange($settings);
+//    echo $twitter->setGetfield($getfield)
+//                 ->buildOauth($url, $requestMethod)
+//                 ->performRequest();
 
