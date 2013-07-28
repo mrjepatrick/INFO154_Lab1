@@ -34,13 +34,16 @@ $settings = array(
  *  Perform a GET request and echo the response
  ******************************************************************************/
     /** Note: Set the GET field BEFORE calling buildOauth(); **/
-    $url = 'https://api.twitter.com/1.1/followers/ids.json';
-    //$url = 'https://api.twitter.com/1.1/search/tweets.json';
-    $getfield = '?username=J7mbo';
+    // follower_ids
+    //$url = 'https://api.twitter.com/1.1/followers/ids.json';
+    // tweets
+    $url = 'https://api.twitter.com/1.1/search/tweets.json';
+    $getfield = '?q=corgi';
 
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($settings);
     echo $twitter->setGetfield($getfield)
                  ->buildOauth($url, $requestMethod)
                  ->performRequest();
-
+    //file_put_contents('tweets.json', print_r($output, 1), FILE_APPEND );
+?>
