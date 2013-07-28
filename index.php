@@ -36,7 +36,7 @@ $requestMethod = 'POST';
  ******************************************************************************/
     /** Note: Set the GET field BEFORE calling buildOauth(); **/
     $url = 'https://api.twitter.com/1.1/followers/ids.json';
-    $getfield = '?q=corgi&screen_name=J7mbo&near=Philadelphia&within=15mi';
+    $getfield = '?q=corgi&near=Philadelphia&within=15mi';
 
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($settings);
