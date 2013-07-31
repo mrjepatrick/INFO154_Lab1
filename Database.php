@@ -7,7 +7,7 @@
 class Database{
     var $db;
     
-    public function __construct($dbname){
+    public function __construct(){
         
         // Setup variables
         $username = 'root';
@@ -19,24 +19,23 @@ class Database{
 //  CONNECT TO DATABASE
 ////////////////////////////////////////////////////////////////////////////////
         
-        $dsn = 'mysql:host='.$host.';dbname='.$dbname;
+        $dsn = 'mysql:host='.$host.';dbname=twitter';
         
         // Create new querying object
         try{
             $this->db = new PDO($dsn, $username, $passwd);
         } catch (PDOException $e) {
             echo $e->getMessage();
-            echo '<br> The '.$dbname.' database does not exist. Creating it now...';
+            echo '<br> The "twitter" database does not exist. Creating it now...';
             try{
                 
 ////////////////////////////////////////////////////////////////////////////////
 //  BUILD NEW DATABASE STRUCTURE
 ////////////////////////////////////////////////////////////////////////////////
 
-                $this->db = new PDO('mysql:host=localhost', $username, $passwd);
-                //$sql = addToDB($results, $dbname, $tableName, $columns);
-                $sql = "CREATE DATABASE $dbname;
-                        USE $dbname;
+                $this->db = new PDO('mysql:host=localhost', $username, $password);
+                $sql = "CREATE DATABASE twitter;
+                        USE twitter;
                         CREATE TABLE tweets (
                             id VARCHAR(30) NOT NULL,
                             created_at DateTime,
@@ -67,18 +66,6 @@ class Database{
             exit();
         }
     }
-
-////////////////////////////////////////////////////////////////////////////////
-//  ADD TWEETS TO LOCAL DATABASE
-////////////////////////////////////////////////////////////////////////////////
-    public function clearTable(){
-        try{
-            $x = $this->db->prepare('TRUNCATE TABLE tweets');
-            $x->execute();
-        } catch (PDOException $e){
-            die('Attempt failed: '.$e->getMessage());
-        }
-    }
     
 ////////////////////////////////////////////////////////////////////////////////
 //  ADD TWEETS TO LOCAL DATABASE
@@ -105,89 +92,6 @@ class Database{
             die('insert attempt failed: '.$e->getMessage());
         }
     }
-
-////////////////////////////////////////////////////////////////////////////////
-//  COUNT TWEETS IN LOCAL DATABASE
-////////////////////////////////////////////////////////////////////////////////
-    public function countEntries(){
-        try{
-            // Count the tweets!
-            $y = $this->db->prepare('SELECT COUNT(*) FROM tweets');
-            $y->execute();
-        } catch (PDOException $e){
-            die('Attempt failed: '.$e->getMessage());
-        }
-        // Return the counted value
-        return ($y->fetchColumn());
-    }
-    
-////////////////////////////////////////////////////////////////////////////////
-//  SEARCH LOCAL DATABASE
-////////////////////////////////////////////////////////////////////////////////
-    public function search($query){
-        try {
-            $z = $this->db->prepare($query);
-            $z->execute();
-        } catch (PDOException $e){
-            die('Query failed: '.$e->getMessage());
-        }
-        
-        $tableData =  '<table border=1>';
-        
-        $heading = true;
-        while (($row = $z->fetch(PDO::FETCH_ASSOC))){
-            
-            $tableData .= '<tr>';
-            
-            if($heading){
-                $keys = array_keys($row);
-                foreach($keys as $k){
-                    $tableData .= '<th>' . $k . '</th>';
-                }
-                $tableData .= '</tr><tr>';
-                $heading = false;
-            }
-            
-            foreach($row as $r => $v){
-                $tableData .= '<td>'.$v.'</td>';
-            }
-            $tableData .= '</tr>';
-        }
-        $tableData .= '</table>';
-        
-        return $tableData;
-    }
-    
-    
-
-////////////////////////////////////////////////////////////////////////////////
-//////  Print directly from Twitter response
-        
-//    function printData($results){
-//        // Print results
-//        echo '<table border="1">';
-//        echo '<tr>';
-//        foreach( array_keys($results) as $key ){
-//            echo '<th>'.ucfirst($key).'</th>';
-//        }
-//        echo '</tr>';
-//
-//        foreach($results as $row){
-//            echo '<tr><td>'.$row['user_id'].'</td><td>'.$row['time'].'</td><td>'.$row['text'].'</td></tr>';
-//        }
-//        echo '</table>';
-//
-//        return true;
-//    }
-//    
-//    function printSpec($db){
-//        // Construct query string
-//        $sql = "SELECT user_id,time,text FROM tweets LIMIT 5";
-//        // Grab data from Twitter
-//        $results = $db->query($sql);
-//
-//        printData($results);
-//    }
 
 }
 
