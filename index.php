@@ -8,7 +8,8 @@
 <?php
 ini_set('display_errors', 1);
 require_once('TwitterAPIExchange.php');
-
+require 'Tweet.php';
+require 'Database.php';
 
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
 $settings = array(
@@ -20,37 +21,32 @@ $settings = array(
 
 
 /*******************************************************************************
- * Perform a POST request and echo the response
- ******************************************************************************/
-// URL for REST request, see: https://dev.twitter.com/docs/api/1.1/
-//$url = 'https://api.twitter.com/1.1/blocks/create.json';
-//$requestMethod = 'POST';
-//
-//    $postfields = array(
-//        'screen_name' => 'usernameToBlock', 
-//        'skip_status' => '1'
-//    );
-//
-//    $twitter = new TwitterAPIExchange($settings);
-//    echo $twitter->buildOauth($url, $requestMethod)
-//                 ->setPostfields($postfields)
-//                 ->performRequest();
-
-
-/*******************************************************************************
  *  Perform a GET request and echo the response
  ******************************************************************************/
-    /** Note: Set the GET field BEFORE calling buildOauth(); **/
-    // follower_ids
-    //$url = 'https://api.twitter.com/1.1/followers/ids.json';
-    // tweets
+    // Base target url
     $url = 'https://api.twitter.com/1.1/search/tweets.json';
-    $getfield = '?q=corgi';
+    
+    // Search term
+    $searchTerm = 'corgi';
+    
+    // Concatenated search parameters
+    $queryString = '?q='.$searchTerm;
 
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($settings);
-    echo $twitter->setGetfield($getfield)
+    
+    // The json string response
+    $jsonResponse = $twitter->setGetfield($queryString)
                  ->buildOauth($url, $requestMethod)
                  ->performRequest();
-    //file_put_contents('tweets.json', print_r($output, 1), FILE_APPEND );
+    
+    // Data converted to an array
+    $twitterArray = json_decode($jsonResponse)->statuses;
+    
+    //test output
+    print_r($twitterArray);
+    // view individual tweet by index
+    //print_r($twitterArray[0]);
+    
+    //file_put_contents('twitter.json', print_r($jsonResponse, 1), FILE_APPEND );
 ?>
