@@ -1,11 +1,14 @@
 <!--============================================================================
    Name   : index.php
-   Purpose: INFO154 - Lab2
+   Purpose: INFO154 - Lab3
    Author : Jeremy Patrick
    Date   : July 27, 2013
  ============================================================================-->
 
 <?php
+
+header('Content-type: text/html; charset=utf-8');
+
 ini_set('display_errors', 1);
 require_once('TwitterAPIExchange.php');
 require 'Tweet.php';
@@ -47,6 +50,7 @@ $settings = array(
     print_r($twitterArray);
     // view individual tweet by index
     //print_r($twitterArray[0]);
+   
     
     //file_put_contents('twitter.json', print_r($jsonResponse, 1), FILE_APPEND );
 ?>

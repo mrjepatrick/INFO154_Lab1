@@ -15,7 +15,7 @@ class Tweet{
     //var $to_user_name;
     //var $geo;
     var $profile_image_url;
-    private $text;
+    var $text;
     var $repeats;
     
     // Constructor
@@ -31,14 +31,6 @@ class Tweet{
         $this->from_user_name = $json->from_user_name;
         $this->text = $json->text;
         $this->repeats = 0;
-    }
-    
-    function getText(){
-        return $this->text;
-    }
-    
-    function getStringInHTML(){
-        return "Time: ".$this->created_at."Name: ".$this->from_user_name."Text: ".$this->getText()."<br>";
     }
     
 }
