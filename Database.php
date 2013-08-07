@@ -1,3 +1,10 @@
+<!--============================================================================
+   Name   : index.php
+   Purpose: INFO154 - Lab3
+   Author : Jeremy Patrick
+   Date   : August 2, 2013
+ ============================================================================-->
+
 <?php
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -5,13 +12,11 @@
 ////////////////////////////////////////////////////////////////////////////////
     
 class Database{
+    
+    // Setup variables
     var $db;
     
-    public function __construct(){
-        
-        // Setup variables
-        $username = 'root';
-        $passwd = '';
+    public function __construct($username, $password){
         
         $host = 'localhost';
 
@@ -20,18 +25,22 @@ class Database{
 ////////////////////////////////////////////////////////////////////////////////
         
         $dsn = 'mysql:host='.$host.';dbname=twitter';
+                
+    ////////////////////////////////////////////////////////////////////////////
+    //  CHECK FOR EXISTING DATABASE
+    ////////////////////////////////////////////////////////////////////////////
         
-        // Create new querying object
         try{
-            $this->db = new PDO($dsn, $username, $passwd);
+        // Create new querying object
+            $this->db = new PDO($dsn, $username, $password);
         } catch (PDOException $e) {
             echo $e->getMessage();
             echo '<br> The "twitter" database does not exist. Creating it now...';
             try{
                 
-////////////////////////////////////////////////////////////////////////////////
-//  BUILD NEW DATABASE STRUCTURE
-////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    //  BUILD NEW DATABASE STRUCTURE
+    ////////////////////////////////////////////////////////////////////////////
 
                 $this->db = new PDO('mysql:host=localhost', $username, $password);
                 $sql = "CREATE DATABASE twitter;
@@ -39,12 +48,12 @@ class Database{
                         CREATE TABLE tweets (
                             id VARCHAR(30) NOT NULL,
                             created_at DateTime,
-                            from_user_id INT,
-                            from_user_name VARCHAR(30),
-                            profile_image_url VARCHAR(200),
                             text VARCHAR(150),
-                            repeats INT,
-                            PRIMARY KEY(id, created_at, from_user_id)
+                            source VARCHAR(200),
+                            screen_name VARCHAR(30),
+                            geo VARCHAR(100),
+                            coordinates VARCHAR(100),
+                            PRIMARY KEY(id, created_at)
                         );";
                 $this->db->exec($sql);
                 echo 'Done!<br>';
@@ -72,19 +81,19 @@ class Database{
 ////////////////////////////////////////////////////////////////////////////////
     public function insertTweets($tweets){
         $sql = "INSERT INTO tweets
-            (id, created_at, from_user_id, from_user_name, profile_image_url, text, repeats)
-            VALUES (:id, :created_at, :from_user_id, :from_user_name, :profile_image_url, :text, :repeats)";
+            (id, created_at, text, source, screen_name, geo, coordinates)
+            VALUES (:id, :created_at, :text, :source, :screen_name, :geo, :coordinates)";
         try{
             $x = $this->db->prepare($sql);
             foreach($tweets as $t){
                 $parameters = array(
                     ':id' => $t->id,
                     ':created_at' => date('Y-m-d H:i:s', strtotime($t->created_at)),
-                    ':from_user_id' => $t->from_user_id,
-                    ':from_user_name' => $t->from_user_name,
-                    ':profile_image_url' => $t->profile_image_url,
-                    ':text' => $t->getText(),
-                    ':repeats' => $t->repeats
+                    ':text' => $t->text,
+                    ':source' => $t->source,
+                    ':screen_name' => $t->screen_name,
+                    ':geo' => $t->geo,
+                    ':coordinates' => $t->coordinates
                 );
                 $x->execute($parameters);
             }
