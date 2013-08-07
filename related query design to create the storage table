@@ -1,0 +1,41 @@
+<?php
+ 
+$q = $_GET["q"]; // query string
+$request = "http://search.twitter.com/search.json?q=".urlencode($q);
+$response = file_get_contents($request);
+$jsonobj = json_decode($response);
+ 
+if($jsonobj != null){
+ 
+  $con = mysql_connect('host', 'username', 'password');
+ 
+	if (!$con){
+		die('Could not connect: ' . mysql_error());
+	}
+ 
+	foreach($jsonobj->results as $item){
+ 
+		$id = $item->id;
+		$created_at = strtotime($created_at);
+		$mysqldate = date('Y-m-d H:i:s',$created_at);
+		$from_user = mysql_real_escape_string($item->from_user);
+		$from_user_id = $item->from_user_id;
+		$text = mysql_real_escape_string($item->text);
+		$source = mysql_real_escape_string($item->source);
+		$iso_language_code = $item->iso_language_code;
+		$profile_image_url = mysql_real_escape_string($item->profile_image_url);
+		$to_user_id = $item->to_user_id;
+		if($to_user_id==""){ $to_user_id = 0; }
+		$query = mysql_real_escape_string($query);
+ 
+		mysql_select_db("database", $con);
+                // SQL query to create table available at http://snipplr.com/view/56995/sql-query-to-create-a-table-in-mysql-to-store-tweets/
+		$query = "INSERT into tweets VALUES ($id,'$mysqldate','$from_user',$from_user_id,'$text','$source','$iso_language_code','$profile_image_url',$to_user_id,'$q')";
+		$result = mysql_query($query);
+ 
+	}
+ 
+	mysql_close($con);
+}
+ 
+?>
