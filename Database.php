@@ -82,7 +82,7 @@ class Database{
 ////////////////////////////////////////////////////////////////////////////////
     public function insertTweets($tweets){
         $sql = "INSERT INTO tweets
-            (id, created_at, text, source, screen_name, geo, coordinates)
+            (id, created_at, text, source, screen_name, geo, coordinates, iso_language_code)
             VALUES (:id, :created_at, :text, :source, :screen_name, :geo, :coordinates, :iso_language_code)";
         try{
             $x = $this->db->prepare($sql);
