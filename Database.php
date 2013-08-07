@@ -53,6 +53,7 @@ class Database{
                             screen_name VARCHAR(30),
                             geo VARCHAR(100),
                             coordinates VARCHAR(100),
+                            iso_language_code VARCHAR(2),
                             PRIMARY KEY(id, created_at)
                         );";
                 $this->db->exec($sql);
@@ -82,7 +83,7 @@ class Database{
     public function insertTweets($tweets){
         $sql = "INSERT INTO tweets
             (id, created_at, text, source, screen_name, geo, coordinates)
-            VALUES (:id, :created_at, :text, :source, :screen_name, :geo, :coordinates)";
+            VALUES (:id, :created_at, :text, :source, :screen_name, :geo, :coordinates, :iso_language_code)";
         try{
             $x = $this->db->prepare($sql);
             foreach($tweets as $t){
@@ -93,7 +94,8 @@ class Database{
                     ':source' => $t->source,
                     ':screen_name' => $t->screen_name,
                     ':geo' => $t->geo,
-                    ':coordinates' => $t->coordinates
+                    ':coordinates' => $t->coordinates,
+                    ':iso_language_code' => $t->iso_language_code
                 );
                 $x->execute($parameters);
             }
