@@ -28,10 +28,51 @@ $settings = array(
     
     // Search term
     $searchTerm = urlencode($_REQUEST['keyword']);
+    //$geocode = urlencode($_REQUEST['geocode']);
+    $near = urlencode($_REQUEST['near']);
+    $within = urlencode($_REQUEST['within']);
+    $lang = urlencode($_REQUEST['lang']);
+    $locale = urlencode($_REQUEST['locale']);
+    $page = urlencode($_REQUEST['page']);
+    $result_type = urlencode($_REQUEST['result_type']);
+    $rpp = urlencode($_REQUEST['rpp']);
+    $until = urlencode($_REQUEST['until']);
+    $since_id = urlencode($_REQUEST['since_id']);
+    $max_id = urlencode($_REQUEST['max_id']);
     
     // Concatenated search parameters
     $queryString = '?q='.$searchTerm;
-
+//    if ( $geocode ){
+//        $queryString .= '&geocode='.$geocode;
+//    }
+    if ( $near ){
+        $queryString .= '&near='.$near;
+    }
+    if ( $within ){
+        $queryString .= '&within='.$within;
+    }
+    if ( $lang ){
+        $queryString .= '&lang='.$lang;
+    }
+    if ( $page ){
+        $queryString .= '&page='.$page;
+    }
+    if ( $result_type ){
+        $queryString .= '&result_type='.$result_type;
+    }
+    if ( $rpp ){
+        $queryString .= '&rpp='.$rpp;
+    }
+    if ( $until ){
+        $queryString .= '&until='.$until;
+    }
+    if ( $since_id ){
+        $queryString .= '&since_id='.$since_id;
+    }
+    if ( $max_id  ){
+        $queryString .= '&max_id ='.$max_id;
+    }
+    
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($settings);
     
@@ -60,7 +101,7 @@ $settings = array(
  ******************************************************************************/
     // Organize incoming data
     foreach($twitterArray as $tweet){
-        $tweetObjects[] = new Tweet($tweet);
+        $tweetObjects[] = new Tweet($tweet, $near, $within);
     }
 
     // Local mySQL credentials
