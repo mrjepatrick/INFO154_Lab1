@@ -1,5 +1,5 @@
 <!--============================================================================
-   Name   : index.php
+   Name   : Database.php
    Purpose: INFO154 - Lab4
    Author : Jeremy Patrick
    Date   : August 2, 2013
@@ -51,9 +51,9 @@ class Database{
                             text VARCHAR(150),
                             source VARCHAR(200),
                             screen_name VARCHAR(30),
-                            geo VARCHAR(100),
-                            coordinates VARCHAR(100),
                             iso_language_code VARCHAR(2),
+                            near VARCHAR(30),
+                            within VARCHAR(6),
                             PRIMARY KEY(id, created_at)
                         );";
                 $this->db->exec($sql);
@@ -82,25 +82,49 @@ class Database{
 ////////////////////////////////////////////////////////////////////////////////
     public function insertTweets($tweets){
         $sql = "INSERT INTO tweets
-            (id, created_at, text, source, screen_name, geo, coordinates, iso_language_code)
-            VALUES (:id, :created_at, :text, :source, :screen_name, :geo, :coordinates, :iso_language_code)";
+            (id, created_at, text, source, screen_name, iso_language_code, near, within)
+            VALUES (:id, :created_at, :text, :source, :screen_name, :iso_language_code, :near, :within)";
         try{
             $x = $this->db->prepare($sql);
             foreach($tweets as $t){
                 $parameters = array(
-                    ':id' => $t->id,
-                    ':created_at' => date('Y-m-d H:i:s', strtotime($t->created_at)),
-                    ':text' => $t->text,
-                    ':source' => $t->source,
-                    ':screen_name' => $t->screen_name,
-                    ':geo' => $t->geo,
-                    ':coordinates' => $t->coordinates,
-                    ':iso_language_code' => $t->iso_language_code
+                    ':id' => utf8_encode($t->id),
+                    ':created_at' => utf8_encode(date('Y-m-d H:i:s', strtotime($t->created_at))),
+                    ':text' => utf8_encode($t->text),
+                    ':source' => utf8_encode($t->source),
+                    ':screen_name' => utf8_encode($t->screen_name),
+                    //':geo' => utf8_encode($t->geo),
+                    //':coordinates' => utf8_encode($t->coordinates),
+                    ':iso_language_code' => utf8_encode($t->iso_language_code),
+                    ':near' => utf8_encode($t->near),
+                    ':within' => utf8_encode($t->within)
                 );
                 $x->execute($parameters);
             }
         } catch(PDOException $e) {
             die('insert attempt failed: '.$e->getMessage());
+        }
+    }
+        
+////////////////////////////////////////////////////////////////////////////////
+//  SELECT TWEETS FROM LOCAL DATABASE
+////////////////////////////////////////////////////////////////////////////////
+    public function selectTweets($location, $distance){
+        $sql = "SELECT * FROM tweets
+                WHERE (near = :near) AND (within = :within)
+                ORDER BY created_at DESC LIMIT 50;";
+        try{
+            $z = $this->db->prepare($sql);
+            $z->execute( array(':near' => $location, ':within' => $distance) );
+            $result = $z->fetchAll();
+            
+            if( empty($result) ){
+                return false;
+            } else {
+                return $result;
+            }
+        } catch(PDOException $e) {
+            die('select attempt failed: '.$e->getMessage());
         }
     }
 

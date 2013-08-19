@@ -1,6 +1,13 @@
+<!--============================================================================
+   Name   : functions.php
+   Purpose: INFO154 - Lab4
+   Author : Jeremy Patrick
+   Date   : August 18, 2013
+ ============================================================================-->
+
 <?php
 
-function queryString($distance){
+function executeRequest($distance){
     $settings = array(
         'oauth_access_token' => "1613577200-6ldEX4qSq1SfcpNssZyWrfnciJGBERAXJ5sve18",
         'oauth_access_token_secret' => "WSkDpmUpGqC7lZhUtC0KPgKfLgQg2hS94MxgZbec",
@@ -15,13 +22,12 @@ function queryString($distance){
     // Base target url
     $url = 'https://api.twitter.com/1.1/search/tweets.json';
     
-    // Search term
+    // Form inputs
     $searchTerm = $_REQUEST['keyword'];
     //$geocode = $_REQUEST['geocode'];
     $near = $_REQUEST['near'];
     $within = $distance;//$_REQUEST['within'];
     $lang = $_REQUEST['lang'];
-    $page = $_REQUEST['page'];
     $result_type = $_REQUEST['result_type'];
     $count = $_REQUEST['count'];
     $until = $_REQUEST['untilYear'].'-'.$_REQUEST['untilMonth'].'-'.$_REQUEST['untilDay'];
@@ -32,6 +38,18 @@ function queryString($distance){
     
     // Concatenated search parameters
     $queryString = '?q='.urlencode($searchTerm);
+    if ( $since_id && $since_id != '' && $since_id != "" ){
+        $queryString .= '&since_id='.urlencode($since_id);
+    }
+//    if ( $max_id && $max_id != '' && $max_id != "" ){
+//        $queryString .= '&max_id ='.urlencode($max_id);
+//    }
+    if ( $result_type && $result_type != '' && $result_type != "" ){
+        $queryString .= '&result_type='.urlencode($result_type);
+    }
+    if ( $count && $count != '' && $count != "" ){
+        $queryString .= '&count='.urlencode($count);
+    }
     //if ( $geocode && $geocode != '' && $geocode != "" ){
         //$queryString .= '&geocode='.urlencode($geocode);
     //}
@@ -45,24 +63,9 @@ function queryString($distance){
     if ( $lang && $lang != '' && $lang != "" ){
         $queryString .= '&lang='.urlencode($lang);
     }
-//    if ( $page && $page != '' && $page != "" ){
-//        $queryString .= '&page='.urlencode($page);
-//    }
-    if ( $result_type && $result_type != '' && $result_type != "" ){
-        $queryString .= '&result_type='.urlencode($result_type);
-    }
-    if ( $count && $count != '' && $count != "" ){
-        $queryString .= '&count='.urlencode($count);
-    }
     if ( $until && $until != '' && $until != "" ){
         $queryString .= '&until='.urlencode($until);
     }
-//    if ( $since_id && $since_id != '' && $since_id != "" ){
-//        $queryString .= '&since_id='.urlencode($since_id);
-//    }
-//    if ( $max_id && $max_id != '' && $max_id != "" ){
-//        $queryString .= '&max_id ='.urlencode($max_id);
-//    }
     
     $requestMethod = 'GET';
     $twitter = new TwitterAPIExchange($settings);
@@ -92,11 +95,7 @@ function queryString($distance){
  ******************************************************************************/
     // Organize incoming data
     foreach($twitterArray as $tweet){
-        if($location){
-            $tweetObjects[] = new Tweet($tweet, $near, $within);
-        } else {
-            $tweetObjects[] = new Tweet($tweet);
-        }
+        $tweetObjects[] = new Tweet($tweet, $near, $within);
     }
 
     // Local mySQL credentials

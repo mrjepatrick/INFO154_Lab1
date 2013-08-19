@@ -1,5 +1,5 @@
 <!--============================================================================
-   Name   : index.php
+   Name   : Tweet.php
    Purpose: INFO154 - Lab4
    Author : Jeremy Patrick
    Date   : August 2, 2013
@@ -26,14 +26,14 @@ class Tweet{
     var $within;
     
     // Constructor
-    public function __construct($json, $near=null, $within=null){
+    public function __construct($json, $near, $within){
         $this->id = $json->id;
         $this->created_at = $json->created_at;
         $this->text = $json->text;
         $this->source = $json->source;
         $this->screen_name = $json->user->screen_name;
-        $this->geo = $json->geo;
-        $this->coordinates = $json->coordinates;
+        //$this->geo = $json->geo;
+        //$this->coordinates = $json->coordinates;
         $this->iso_language_code = $json->metadata->iso_language_code;
         $this->near = $near;
         $this->within = $within;
