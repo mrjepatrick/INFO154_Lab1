@@ -1,6 +1,6 @@
 <!--============================================================================
    Name   : index.php
-   Purpose: INFO154 - Lab3
+   Purpose: INFO154 - Lab4
    Author : Jeremy Patrick
    Date   : August 2, 2013
  ============================================================================-->
@@ -22,9 +22,11 @@ class Tweet{
     var $geo;
     var $coordinates;
     var $iso_language_code;
+    var $near;
+    var $within;
     
     // Constructor
-    public function __construct($json, $near, $within){
+    public function __construct($json, $near=null, $within=null){
         $this->id = $json->id;
         $this->created_at = $json->created_at;
         $this->text = $json->text;
