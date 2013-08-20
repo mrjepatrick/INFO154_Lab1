@@ -37,9 +37,14 @@
         <hr>
     <form action='controller.php' method="POST" name="tweetForm">
         <b>Twitter search term:</b> <input type="text" name="keyword" size="25" maxlength="25" value="dogs and cats" /><span class="red"> *required field</span><br>
-        <b>Tweet near:</b> <input type="text" name="near" size="25" maxlength="25" value="philadelphia" /><span class="fade">(Example: "philadelphia")</span><span class="red"> *required field</span> <br>
-        <b>Within distances:</b> 5mi, 10mi, 15mi <span class="fade">(Handled by API)</span><!--<input type="text" name="within" size="6" maxlength="6" value="15mi" />--> <br>
-        <!--<b>Tweet geocode:</b> <input type="text" name="geocode" size="25" maxlength="25" value="37.781157,-122.398720,1mi" /> <br>-->
+        
+        <b>Tweet near:</b> <select name="location">
+            <option value="ph">Philadelphia</option>
+            <option value="ny">New York</option>
+            <option value="sf">San Francisco</option>
+            <option value="ch">Chicago</option>
+        </select> <span class="red"> *required field</span><br>
+        <b>Within distances:</b> 5mi, 10mi, 15mi <span class="fade">(Handled by API)</span> <br>
         <b>Language:</b> <select name="lang">
             <option value="en">English</option>
             <option value="ja">Japanese</option>

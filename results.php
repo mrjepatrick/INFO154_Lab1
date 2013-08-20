@@ -5,13 +5,15 @@
    Date   : August 18, 2013
  ============================================================================-->
 <?php
+    require 'Database.php';
+    session_start();
     
-    $searchTerm = $_REQUEST['keyword'];
+    $searchTerm = $_SESSION['keyword'];
 
-    $location = $_REQUEST['near'];
+    $location = $_SESSION['location'];
     
-    $username = $_REQUEST['username'];
-    $password = $_REQUEST['password'];
+    $username = $_SESSION['username'];
+    $password = $_SESSION['password'];
     
     $dbA = new Database($username, $password);
     $fiveMiles = $dbA->selectTweets($location, '5mi');
@@ -41,84 +43,102 @@
                 line-height: 56pt;
                 text-align: center;
             }
+            .links{
+                text-align: left;
+            }
+            table {
+                font-size: 10pt;
+                display: inline-table;
+                margin: 5px;
+                text-align: left;
+            }
+            body{
+                text-align: center;
+            }
         </style>
         
     </head>
     <body>
         <h1>INFO 154 - Lab 4 - Results</h1>
         <hr>
-        <span style="text-align:center;"><?php echo '"'.$searchTerm.'"'; ?> - <?php echo $location; ?> - <a href="index.html">Back to inputs page</a></span>
+        <span class="links">
+            <?php echo 'Tweets containing "<b><em>'.$searchTerm.'</em></b>" in the'; ?>
+            <?php
+                if($location==='ph'){
+                    $near = 'Philadelphia';
+                } else if ($location==='ny'){
+                    $near = 'New York';
+                } else if ($location==='sf'){
+                    $near = 'San Francisco';
+                } else if ($location==='ch'){
+                    $near = 'Chicago';
+                }
+                echo '<b><em>'.$near.'</em></b> area.';
+                
+            ?>
+            -
+            <a href="index.html">Back to inputs page</a>
+        </span>
         <hr>
-        <table width = "100%" border ="0" cellspacing = "0" cellpadding = "5">
+        <table width="30%" border ="1" cellspacing = "0" cellpadding = "1">
             <tr>
-                <td width =:33%">
-                    <table  width = "100%" border ="1" cellspacing = "0" cellpadding = "1">
-                        <tr>
-                            <td colspan= "3" align="center"><b>Within 5 miles</b></td>
-                        </tr>
-                        <tr>
-                            <td> Name</td>
-                            <td> Tweet</td>
-                            <td> Date created</td>
-                        </tr>
-                        <?php
-                            foreach($fiveMiles as $tweet){
-                                $fiveString = "<tr>
-                                    <td>".$tweet['screen_name']."</td>
-                                    <td>".$tweet['text']."</td>
-                                    <td>".$tweet['created_at']."</td>
-                                </tr>";
-                                echo $fiveString;
-                            }
-                        ?>
-                    </table>
-                </td>
-                <td width =:33%">
-                    <table  width = "100%" border ="1" cellspacing = "0" cellpadding = "1">
-                        <tr>
-                            <td colspan= "3" align="center"><b>Within 10 miles</b></td>
-                        </tr>
-                        <tr>
-                            <td> Name</td>
-                            <td> Tweet</td>
-                            <td> Date created</td>
-                        </tr>
-                        <?php
-                            foreach($tenMiles as $tweet){
-                                $tenString = "<tr>
-                                    <td>".$tweet['screen_name']."</td>
-                                    <td>".$tweet['text']."</td>
-                                    <td>".$tweet['created_at']."</td>
-                                </tr>";
-                                echo $tenString;
-                            }
-                        ?>
-                    </table>
-                </td>
-                <td width =:33%">
-                    <table  width = "100%" border ="1" cellspacing = "0" cellpadding = "1">
-                        <tr>
-                            <td colspan= "3" align="center"><b>Within 15 miles</b></td>
-                        </tr>
-                        <tr>
-                            <td> Name</td>
-                            <td> Tweet</td>
-                            <td> Date created</td>
-                        </tr>
-                        <?php
-                            foreach($fifteenMiles as $tweet){
-                                $fifteenString = "<tr>
-                                    <td>".$tweet['screen_name']."</td>
-                                    <td>".$tweet['text']."</td>
-                                    <td>".$tweet['created_at']."</td>
-                                </tr>";
-                                echo $fifteenString;
-                            }
-                        ?>
-                    </table>
-                </td>
+                <td colspan= "3" align="center"><b>Within 5 miles</b></td>
             </tr>
+            <tr>
+                <td> Name</td>
+                <td> Tweet</td>
+                <td> Date created</td>
+            </tr>
+            <?php
+                foreach($fiveMiles as $tweet){
+                    $fiveString = "<tr>
+                        <td>".$tweet['screen_name']."</td>
+                        <td>".$tweet['text']."</td>
+                        <td>".$tweet['created_at']."</td>
+                    </tr>";
+                    echo $fiveString;
+                }
+            ?>
         </table>
-        
+        <table  width = "30%" border ="1" cellspacing = "0" cellpadding = "1">
+            <tr>
+                <td colspan= "3" align="center"><b>Within 10 miles</b></td>
+            </tr>
+            <tr>
+                <td> Name</td>
+                <td> Tweet</td>
+                <td> Date created</td>
+            </tr>
+            <?php
+                foreach($tenMiles as $tweet){
+                    $tenString = "<tr>
+                        <td>".$tweet['screen_name']."</td>
+                        <td>".$tweet['text']."</td>
+                        <td>".$tweet['created_at']."</td>
+                    </tr>";
+                    echo $tenString;
+                }
+            ?>
+        </table>
+        <table  width = "30%" border ="1" cellspacing = "0" cellpadding = "1">
+            <tr>
+                <td colspan= "3" align="center"><b>Within 15 miles</b></td>
+            </tr>
+            <tr>
+                <td> Name</td>
+                <td> Tweet</td>
+                <td> Date created</td>
+            </tr>
+            <?php
+                foreach($fifteenMiles as $tweet){
+                    $fifteenString = "<tr>
+                        <td>".$tweet['screen_name']."</td>
+                        <td>".$tweet['text']."</td>
+                        <td>".$tweet['created_at']."</td>
+                    </tr>";
+                    echo $fifteenString;
+                }
+            ?>
+        </table>
     </body>
 </html>

@@ -24,42 +24,44 @@ function executeRequest($distance){
     
     // Form inputs
     $searchTerm = $_REQUEST['keyword'];
-    //$geocode = $_REQUEST['geocode'];
-    $near = $_REQUEST['near'];
-    $within = $distance;//$_REQUEST['within'];
+    $location = $_REQUEST['location'];
     $lang = $_REQUEST['lang'];
     $result_type = $_REQUEST['result_type'];
     $count = $_REQUEST['count'];
     $until = $_REQUEST['untilYear'].'-'.$_REQUEST['untilMonth'].'-'.$_REQUEST['untilDay'];
     $since_id = $_REQUEST['since_id'];
     $max_id = $_REQUEST['max_id'];
-    
-    $location = false;
-    
+        
     // Concatenated search parameters
     $queryString = '?q='.urlencode($searchTerm);
     if ( $since_id && $since_id != '' && $since_id != "" ){
         $queryString .= '&since_id='.urlencode($since_id);
     }
-//    if ( $max_id && $max_id != '' && $max_id != "" ){
-//        $queryString .= '&max_id ='.urlencode($max_id);
-//    }
+    if ( $max_id && $max_id != '' && $max_id != "" ){
+        $queryString .= '&max_id='.urlencode($max_id);
+    }
     if ( $result_type && $result_type != '' && $result_type != "" ){
         $queryString .= '&result_type='.urlencode($result_type);
     }
     if ( $count && $count != '' && $count != "" ){
         $queryString .= '&count='.urlencode($count);
     }
-    //if ( $geocode && $geocode != '' && $geocode != "" ){
-        //$queryString .= '&geocode='.urlencode($geocode);
-    //}
-//    if ( $near && $near != '' && $near != "" ){
-//        $queryString .= '&near="'.urlencode($near).'"';
-//        if ( $within && $within != '' && $within != "" ){
-//            $queryString .= '&within='.urlencode($within);
-//            $location = true;
-//        }
-//    }
+    if ( $location && $location != '' && $location != "" ){
+        if($location==='ph'){
+            $near = '39.975278,-75.152321,';
+        } else if ($location==='ny'){
+            $near = '40.714353,-74.005973,';
+        } else if ($location==='sf'){
+            $near = '37.77493,-122.419416,';
+        } else if ($location==='ch'){
+            $near = '41.970722,-87.6297,';
+        } else {
+            $near = null;
+        }
+        
+        $queryString .= '&geocode='.urlencode($near.$distance);
+        
+    }
     if ( $lang && $lang != '' && $lang != "" ){
         $queryString .= '&lang='.urlencode($lang);
     }
@@ -95,7 +97,7 @@ function executeRequest($distance){
  ******************************************************************************/
     // Organize incoming data
     foreach($twitterArray as $tweet){
-        $tweetObjects[] = new Tweet($tweet, $near, $within);
+        $tweetObjects[] = new Tweet($tweet, $location, $distance);
     }
 
     // Local mySQL credentials
